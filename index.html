@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step Tracker</title>
+    <link rel = "Stylesheet" href="style.css"> </head>
+   
+</head>
+<body>
+
+    <h1>Step Tracker</h1>
+    <div class="container">
+        <label for="stepInput">Enter Total Steps:</label>
+        <input type="number" id="stepInput" min="1000" step="1" placeholder="1000">
+        <br><br>
+        <button onclick="startCounting()">Start Tracking</button>
+        <h2 id="stepsLeft">Steps Left: 0</h2>
+    </div>
+
+    <script src = "script.js"> </script>
+
+</body>
+</html>
