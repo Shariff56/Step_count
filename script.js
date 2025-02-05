@@ -1,9 +1,8 @@
 let totalSteps = 0;
 let lastWalkTime = Date.now();
 let lastY = null;
-let stepThreshold = 1.2;  // Minimum difference in Y acceleration to count as a step
+let stepThreshold = 1.2;
 let motionEventAdded = false;
-let lastStepTime = 0; // To ensure steps are not counted too quickly
 
 function startCounting() {
     totalSteps = parseInt(document.getElementById("stepInput").value);
@@ -18,7 +17,7 @@ function startCounting() {
 
 function updateSteps() {
     let stepsDisplay = document.getElementById("stepsLeft");
-    stepsDisplay.innerText = Steps Left: ${totalSteps};
+    stepsDisplay.innerText = `Steps Left: ${totalSteps}`;
     stepsDisplay.style.transform = "scale(1.2)";
     setTimeout(() => stepsDisplay.style.transform = "scale(1)", 200);
 }
@@ -42,15 +41,10 @@ function startStepTracking() {
         motionEventAdded = true;
         window.addEventListener("devicemotion", function (event) {
             let yAcceleration = event.accelerationIncludingGravity?.y || 0;
-            let currentTime = Date.now();
-            
-            // Prevent counting steps if they occur too quickly (e.g., due to shaking)
-            if (currentTime - lastStepTime > 500) {  // Allow steps only 500ms apart
-                if (lastY !== null && Math.abs(yAcceleration - lastY) > stepThreshold) {
-                    stepDetected();
-                }
-                lastY = yAcceleration;
+            if (lastY !== null && Math.abs(yAcceleration - lastY) > stepThreshold) {
+                stepDetected();
             }
+            lastY = yAcceleration;
         }, { passive: true });
     } else if (!window.DeviceMotionEvent) {
         alert("Your device does not support motion tracking.");
@@ -61,10 +55,9 @@ function stepDetected() {
     if (totalSteps > 0) {
         totalSteps--;
         lastWalkTime = Date.now();
-        lastStepTime = Date.now();  // Update the last step time to prevent immediate consecutive steps
         updateSteps();
         if (totalSteps % 1000 === 0 && totalSteps !== 0) {
-            speakOnce(Great job! Only ${totalSteps} steps left!);
+            speakOnce(`Great job! Only ${totalSteps} steps left!`);
         }
         if (totalSteps === 0) {
             speakOnce("Congratulations! You've reached your goal!");
