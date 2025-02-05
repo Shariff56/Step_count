@@ -65,11 +65,13 @@ function stepDetected() {
     }
 }
 
+// Reset function
 function resetTracker() {
     totalSteps = 0;
+    lastWalkTime = Date.now();
     lastY = null;
     motionEventAdded = false;
-    document.getElementById("stepsLeft").innerText = "Steps Left: 0";
     document.getElementById("stepInput").value = "";
-    window.removeEventListener("devicemotion", stepDetected);
+    document.getElementById("stepsLeft").innerText = "Steps Left: 0";
+    alert("Tracker reset successfully!");
 }
